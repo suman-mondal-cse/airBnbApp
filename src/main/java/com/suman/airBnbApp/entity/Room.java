@@ -17,15 +17,15 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hotel_id", nullable = false) // inside DB it should be hotel_id and in java code it is hotel
     private Hotel hotel;
 
     @Column(nullable = false)
-    private  String type;
+    private String type;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal pasePrice;
+    private BigDecimal basePrice;
 
     @CreationTimestamp
     @Column(updatable = false)

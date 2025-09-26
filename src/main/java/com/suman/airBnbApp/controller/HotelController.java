@@ -2,11 +2,14 @@ package com.suman.airBnbApp.controller;
 
 import com.suman.airBnbApp.dto.HotelDto;
 import com.suman.airBnbApp.service.HotelService;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin/hotels")
@@ -15,8 +18,14 @@ import org.springframework.web.bind.annotation.*;
 public class HotelController {
     private final HotelService hotelService;
 
+    @GetMapping
+    public ResponseEntity<List<HotelDto>> getAllHotels(){
+        List<HotelDto> allHotel = hotelService.getAllHotel();
+        return ResponseEntity.ok(allHotel);
+    }
+
     @PostMapping
-    public ResponseEntity<HotelDto> createNewHotel(@RequestBody HotelDto hotelDto){
+    public ResponseEntity<HotelDto> createNewHotel(@RequestBody  HotelDto hotelDto){
         log.info("Attempting to create a new hotel with name: {}", hotelDto.getName());
         HotelDto hotel = hotelService.createNewHotel(hotelDto);
         return new ResponseEntity<>(hotel, HttpStatus.CREATED);
@@ -40,7 +49,7 @@ public class HotelController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{hotelId}")
+    @PatchMapping("/{hotelId}")
     public ResponseEntity<Void> activateHotel(@PathVariable Long hotelId){
         hotelService.activeHotel(hotelId);
         return ResponseEntity.noContent().build();

@@ -3,7 +3,9 @@ package com.suman.airBnbApp.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.CurrentTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -23,7 +25,6 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Inventory {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,13 +34,13 @@ public class Inventory {
     private Hotel hotel;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id", nullable = false)
+    @JoinColumn(name= "room_id", nullable = false)
     private Room room;
 
     @Column(nullable = false)
     private LocalDate date;
 
-    @Column(nullable = false, columnDefinition = "Integer Default 0")
+    @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 0")
     private Integer bookedCount;
 
     @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 0")
@@ -48,25 +49,22 @@ public class Inventory {
     @Column(nullable = false)
     private Integer totalCount;
 
-    @CurrentTimestamp
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-
-    @CurrentTimestamp
-    @Column(updatable = true)
-    private LocalDateTime updatedAt;
-
     @Column(nullable = false, precision = 5, scale = 2)
-    private BigDecimal surgeFactory;
+    private BigDecimal surgeFactor;
 
-    @Column(nullable = false, precision = 5, scale = 2)
-    private BigDecimal price; //basePrice * surgeFactory
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal price;
 
     @Column(nullable = false)
     private String city;
 
-    @JsonFormat
     @Column(nullable = false)
     private Boolean closed;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
 }

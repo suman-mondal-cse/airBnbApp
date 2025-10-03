@@ -1,6 +1,6 @@
 package com.suman.airBnbApp.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,8 +8,8 @@ import lombok.Setter;
 @Setter
 @Embeddable
 public class HotelContactInfo {
-    private String Address;
-    private String location;
-    private String email;
+    private String address;
     private String phoneNumber;
+    private String email;
+    private String location;
 }

@@ -2,17 +2,20 @@ package com.suman.airBnbApp.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
-public class Room {
+@NoArgsConstructor
+public class HotelMinPrice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,23 +26,19 @@ public class Room {
     private Hotel hotel;
 
     @Column(nullable = false)
-    private String type;
+    private LocalDate date;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal basePrice;
+    private BigDecimal price; // cheapest room price on a particular day
 
-    @Column(columnDefinition = "TEXT[]")
-    private String[] photos;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
-    @Column(columnDefinition = "TEXT[]")
-    private String[] amenities;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
-    @Column(nullable = false)
-    private Integer totalCount;
-
-    @Column(nullable = false)
-    private Integer capacity;
-
-    @Column(nullable = false)
-    private Boolean active = false;
+    public HotelMinPrice(Hotel hotel, LocalDate date) {
+        this.hotel = hotel;
+        this.date = date;
+    }
 }

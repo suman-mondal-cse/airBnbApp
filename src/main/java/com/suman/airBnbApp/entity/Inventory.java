@@ -1,16 +1,13 @@
 package com.suman.airBnbApp.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.CurrentTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Getter
@@ -19,12 +16,12 @@ import java.util.Date;
         uniqueConstraints = @UniqueConstraint(
             name = "unique_hotel_room_date",
             columnNames = {"hotel_id", "room_id", "date"}
-        ))
-
+))
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Inventory {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -66,5 +63,4 @@ public class Inventory {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
 }

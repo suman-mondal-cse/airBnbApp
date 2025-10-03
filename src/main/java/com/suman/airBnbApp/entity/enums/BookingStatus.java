@@ -1,6 +1,6 @@
 package com.suman.airBnbApp.entity.enums;
 
-public enum BookingStatus  {
+public enum BookingStatus {
     RESERVED,
     GUESTS_ADDED,
     PAYMENTS_PENDING,

@@ -18,17 +18,14 @@ public class User {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private String Email;
+    private String email;
 
     @Column(nullable = false)
-    private String password; //not normal text, I look it into spring
+    private String password;
 
-    @Column(nullable = false)
     private String name;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
-
-
 }

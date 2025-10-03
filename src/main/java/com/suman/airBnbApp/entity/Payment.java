@@ -20,7 +20,7 @@ public class Payment {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private String transectionId;
+    private String transactionId;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -37,5 +37,4 @@ public class Payment {
 
     @OneToOne(fetch = FetchType.LAZY)
     private Booking booking;
-
 }

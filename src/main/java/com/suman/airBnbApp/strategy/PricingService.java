@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 @Service
-public class PricingService {
+public class  PricingService {
 
     public BigDecimal calculateDynamicPricing(Inventory inventory) {
         PricingStrategy pricingStrategy = new BasePricingStrategy();

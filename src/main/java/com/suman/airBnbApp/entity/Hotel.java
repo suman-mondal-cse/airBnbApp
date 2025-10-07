@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "hotel")
-public class Hotel {
+public class  Hotel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

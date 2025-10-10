@@ -17,26 +17,26 @@ public class RoomAdminController {
     private final RoomService roomService;
 
     @PostMapping
-    public ResponseEntity<RoomDto> createNewRoom(@PathVariable Long hotelId, @RequestBody RoomDto roomDto){
-        RoomDto room = roomService.CreateNewRoom(hotelId, roomDto);
+    public ResponseEntity<RoomDto> createNewRoom(@PathVariable Long hotelId,
+                                                 @RequestBody RoomDto roomDto) {
+        RoomDto room = roomService.createNewRoom(hotelId, roomDto);
         return new ResponseEntity<>(room, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<RoomDto>> getAllRoomsInHotel(@PathVariable Long hotelId){
-        List<RoomDto> allRoomsInHotel = roomService.getAllRoomsInHotel(hotelId);
-        return ResponseEntity.ok(allRoomsInHotel);
+    public ResponseEntity<List<RoomDto>> getAllRoomsInHotel(@PathVariable Long hotelId) {
+        return ResponseEntity.ok(roomService.getAllRoomsInHotel(hotelId));
     }
 
     @GetMapping("/{roomId}")
-    public ResponseEntity<RoomDto> getRoomById(@PathVariable Long roomId){
-        RoomDto room = roomService.getRoomById(roomId);
-        return ResponseEntity.ok(room);
+    public ResponseEntity<RoomDto> getRoomById(@PathVariable Long hotelId, @PathVariable Long roomId) {
+        return ResponseEntity.ok(roomService.getRoomById(roomId));
     }
 
     @DeleteMapping("/{roomId}")
-    public ResponseEntity<Void> deleteRoomById(@PathVariable Long hotelId, @PathVariable Long roomId){
+    public ResponseEntity<RoomDto> deleteRoomById(@PathVariable Long hotelId, @PathVariable Long roomId) {
         roomService.deleteRoomById(roomId);
         return ResponseEntity.noContent().build();
     }
+
 }

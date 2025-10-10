@@ -1,7 +1,7 @@
 package com.suman.airBnbApp.controller;
 
 import com.suman.airBnbApp.dto.BookingDto;
-import com.suman.airBnbApp.dto.BookingRequestDto;
+import com.suman.airBnbApp.dto.BookingRequest;
 import com.suman.airBnbApp.dto.GuestDto;
 import com.suman.airBnbApp.service.BookingService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class HotelBookingController {
     private final BookingService bookingService;
 
     @PostMapping("/init")
-    public ResponseEntity<BookingDto> initialiseBooking(@RequestBody BookingRequestDto bookingRequest) {
+    public ResponseEntity<BookingDto> initialiseBooking(@RequestBody BookingRequest bookingRequest) {
         return ResponseEntity.ok(bookingService.initialiseBooking(bookingRequest));
     }
 

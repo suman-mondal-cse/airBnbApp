@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "hotel")
-public class  Hotel {
+public class Hotel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +43,7 @@ public class  Hotel {
     @Column(nullable = false)
     private Boolean active;
 
-    @ManyToOne
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private User owner;
 
     @OneToMany(mappedBy = "hotel")

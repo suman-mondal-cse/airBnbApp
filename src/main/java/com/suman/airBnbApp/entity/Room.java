@@ -40,6 +40,11 @@ public class Room {
     @Column(nullable = false)
     private Integer capacity;
 
-    @Column(nullable = false)
-    private Boolean active = false;
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
 }

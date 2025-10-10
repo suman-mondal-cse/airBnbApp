@@ -10,13 +10,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
 
-
-@Repository
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
 
     void deleteByRoom(Room room);
@@ -38,7 +35,7 @@ public interface InventoryRepository extends JpaRepository<Inventory, Long> {
             @Param("roomsCount") Integer roomsCount,
             @Param("dateCount") Long dateCount,
             Pageable pageable
-    );
+            );
 
     @Query("""
             SELECT i

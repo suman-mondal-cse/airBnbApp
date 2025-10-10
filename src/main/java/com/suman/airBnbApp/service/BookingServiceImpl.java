@@ -1,15 +1,17 @@
 package com.suman.airBnbApp.service;
 
 import com.suman.airBnbApp.dto.BookingDto;
-import com.suman.airBnbApp.dto.BookingRequestDto;
+import com.suman.airBnbApp.dto.BookingRequest;
 import com.suman.airBnbApp.dto.GuestDto;
 import com.suman.airBnbApp.entity.*;
 import com.suman.airBnbApp.entity.enums.BookingStatus;
 import com.suman.airBnbApp.exception.ResourceNotFoundException;
+import com.suman.airBnbApp.exception.UnAuthorisedException;
 import com.suman.airBnbApp.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +21,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class BookingServiceImpl implements BookingService{
     private final GuestRepository guestRepository;
     private final ModelMapper modelMapper;
@@ -32,7 +34,7 @@ public class BookingServiceImpl implements BookingService{
 
     @Override
     @Transactional
-    public BookingDto initialiseBooking(BookingRequestDto bookingRequest) {
+    public BookingDto initialiseBooking(BookingRequest bookingRequest) {
 
         log.info("Initialising booking for hotel : {}, room: {}, date {}-{}", bookingRequest.getHotelId(),
                 bookingRequest.getRoomId(), bookingRequest.getCheckInDate(), bookingRequest.getCheckOutDate());
@@ -89,6 +91,11 @@ public class BookingServiceImpl implements BookingService{
 
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(() ->
                 new ResourceNotFoundException("Booking not found with id: "+bookingId));
+        User user = getCurrentUser();
+
+        if (!user.equals(booking.getUser())) {
+            throw new UnAuthorisedException("Booking does not belong to this user with id: "+user.getId());
+        }
 
         if (hasBookingExpired(booking)) {
             throw new IllegalStateException("Booking has already expired");
@@ -100,7 +107,7 @@ public class BookingServiceImpl implements BookingService{
 
         for (GuestDto guestDto: guestDtoList) {
             Guest guest = modelMapper.map(guestDto, Guest.class);
-            guest.setUser(getCurrentUser());
+            guest.setUser(user);
             guest = guestRepository.save(guest);
             booking.getGuests().add(guest);
         }
@@ -115,8 +122,6 @@ public class BookingServiceImpl implements BookingService{
     }
 
     public User getCurrentUser() {
-        User user = new User();
-        user.setId(1L); // TODO: REMOVE DUMMY USER
-        return user;
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }

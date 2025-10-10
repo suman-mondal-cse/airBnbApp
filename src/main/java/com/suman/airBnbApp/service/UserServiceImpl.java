@@ -1,6 +1,5 @@
 package com.suman.airBnbApp.service;
 
-
 import com.suman.airBnbApp.entity.User;
 import com.suman.airBnbApp.exception.ResourceNotFoundException;
 import com.suman.airBnbApp.repository.UserRepository;

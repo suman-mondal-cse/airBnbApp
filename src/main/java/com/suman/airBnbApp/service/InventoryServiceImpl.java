@@ -1,9 +1,7 @@
 package com.suman.airBnbApp.service;
 
-import com.suman.airBnbApp.dto.HotelDto;
 import com.suman.airBnbApp.dto.HotelPriceDto;
-import com.suman.airBnbApp.dto.HotelSearchRequestDto;
-import com.suman.airBnbApp.entity.Hotel;
+import com.suman.airBnbApp.dto.HotelSearchRequest;
 import com.suman.airBnbApp.entity.Inventory;
 import com.suman.airBnbApp.entity.Room;
 import com.suman.airBnbApp.repository.HotelMinPriceRepository;
@@ -57,7 +55,7 @@ public class InventoryServiceImpl implements InventoryService{
     }
 
     @Override
-    public Page<HotelPriceDto> searchHotels(HotelSearchRequestDto hotelSearchRequest) {
+    public Page<HotelPriceDto> searchHotels(HotelSearchRequest hotelSearchRequest) {
         log.info("Searching hotels for {} city, from {} to {}", hotelSearchRequest.getCity(), hotelSearchRequest.getStartDate(), hotelSearchRequest.getEndDate());
         Pageable pageable = PageRequest.of(hotelSearchRequest.getPage(), hotelSearchRequest.getSize());
         long dateCount =
@@ -66,8 +64,8 @@ public class InventoryServiceImpl implements InventoryService{
         // business logic - 90 days
         Page<HotelPriceDto> hotelPage =
                 hotelMinPriceRepository.findHotelsWithAvailableInventory(hotelSearchRequest.getCity(),
-                        hotelSearchRequest.getStartDate(), hotelSearchRequest.getEndDate(), hotelSearchRequest.getRoomsCount(),
-                        dateCount, pageable);
+                hotelSearchRequest.getStartDate(), hotelSearchRequest.getEndDate(), hotelSearchRequest.getRoomsCount(),
+                dateCount, pageable);
 
         return hotelPage;
     }

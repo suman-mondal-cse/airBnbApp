@@ -2,9 +2,6 @@ package com.suman.airBnbApp.service;
 
 import com.suman.airBnbApp.dto.HotelDto;
 import com.suman.airBnbApp.dto.HotelInfoDto;
-import com.suman.airBnbApp.dto.HotelInfoRequestDto;
-
-import java.util.List;
 
 public interface HotelService {
     HotelDto createNewHotel(HotelDto hotelDto);
@@ -17,7 +14,5 @@ public interface HotelService {
 
     void activateHotel(Long hotelId);
 
-    HotelInfoDto getHotelInfoById(Long hotelId, HotelInfoRequestDto hotelInfoRequestDto);
-
-    List<HotelDto> getAllHotels();
+    HotelInfoDto getHotelInfoById(Long hotelId);
 }

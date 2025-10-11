@@ -1,9 +1,10 @@
 package com.suman.airBnbApp.controller;
 
-import com.suman.airBnbApp.dto.*;
+import com.suman.airBnbApp.dto.HotelInfoDto;
+import com.suman.airBnbApp.dto.HotelPriceDto;
+import com.suman.airBnbApp.dto.HotelSearchRequest;
 import com.suman.airBnbApp.service.HotelService;
 import com.suman.airBnbApp.service.InventoryService;
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -19,17 +20,15 @@ public class HotelBrowseController {
     private final HotelService hotelService;
 
     @GetMapping("/search")
-    @Operation(summary = "Search hotels", tags = {"Browse Hotels"})
-    public ResponseEntity<Page<HotelPriceResponseDto>> searchHotels(@RequestBody HotelSearchRequest hotelSearchRequest) {
+    public ResponseEntity<Page<HotelPriceDto>> searchHotels(@RequestBody HotelSearchRequest hotelSearchRequest) {
 
         var page = inventoryService.searchHotels(hotelSearchRequest);
         return ResponseEntity.ok(page);
     }
 
     @GetMapping("/{hotelId}/info")
-    @Operation(summary = "Get a hotel info by hotelId", tags = {"Browse Hotels"})
-    public ResponseEntity<HotelInfoDto> getHotelInfo(@PathVariable Long hotelId, @RequestBody HotelInfoRequestDto hotelInfoRequestDto) {
-        return ResponseEntity.ok(hotelService.getHotelInfoById(hotelId, hotelInfoRequestDto));
+    public ResponseEntity<HotelInfoDto> getHotelInfo(@PathVariable Long hotelId) {
+        return ResponseEntity.ok(hotelService.getHotelInfoById(hotelId));
     }
 
 }
